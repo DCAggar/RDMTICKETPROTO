@@ -5,11 +5,17 @@
  */
 package rdmticketproto;
 
+import java.sql.*;
+
 /**
  *
  * @author Aggros the Wroth
  */
 public class REGISTERUI extends javax.swing.JFrame {
+    
+    private static Connection connection = null;
+    
+    public static String Snumber1;
 
     /**
      * Creates new form REGISTERUI
@@ -97,6 +103,18 @@ public class REGISTERUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Snumber1 = jTextField1.getText();
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery("SELECT"+Snumber1+"FROM STUDENTS"))
+        {
+            
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();  // for debugging
+            System.out.println("Student Number not found. Please enter valid student Number.");
+        }     
+        
         this.dispose();
         STUDENTVERIFICATIONUI c = new STUDENTVERIFICATIONUI();
         c.setVisible(true);
@@ -106,6 +124,10 @@ public class REGISTERUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+          // get the connection and start the Derby engine
+        connection = TICKETDB.getConnection();
+        if (connection != null)
+            System.out.println("Derby has been started. Connection Made.\n");
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -128,7 +150,7 @@ public class REGISTERUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(REGISTERUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

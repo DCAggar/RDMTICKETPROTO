@@ -5,11 +5,15 @@
  */
 package rdmticketproto;
 
+import java.sql.*;
+
 /**
  *
  * @author Aggros the Wroth
  */
 public class TICKETUI extends javax.swing.JFrame {
+    
+    private static Connection connection = null;
 
     /**
      * Creates new form TICKETUI
@@ -105,6 +109,11 @@ public class TICKETUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
+         // get the connection and start the Derby engine
+        connection = TICKETDB.getConnection();
+        if (connection != null)
+            System.out.println("Derby has been started. Connection Made.\n");
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

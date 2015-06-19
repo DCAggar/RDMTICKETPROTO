@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 package rdmticketproto;
+import java.sql.*;
+import static rdmticketproto.REGISTERUI.Snumber1;
 
 /**
  *
  * @author Aggros the Wroth
  */
 public class STUDENTVERIFICATIONUI extends javax.swing.JFrame {
+     private static Connection connection = null;
 
     /**
      * Creates new form STUDENTVERIFICATIONUI
@@ -97,8 +100,7 @@ public class STUDENTVERIFICATIONUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -106,7 +108,8 @@ public class STUDENTVERIFICATIONUI extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -118,6 +121,7 @@ public class STUDENTVERIFICATIONUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
         this.dispose();
         TIMEUI d = new TIMEUI();
         d.setVisible(true);
@@ -126,7 +130,11 @@ public class STUDENTVERIFICATIONUI extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void main(String args[]) {
+           // get the connection and start the Derby engine
+        connection = TICKETDB.getConnection();
+        if (connection != null)
+            System.out.println("Derby has been started. Connection Made.\n");
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -155,7 +163,24 @@ public class STUDENTVERIFICATIONUI extends javax.swing.JFrame {
             public void run() {
                 new STUDENTVERIFICATIONUI().setVisible(true);
             }
+            
+            
         });
+        //needs to pull name from DB, and then populate the form with it. Will be able to be more detailed when data source is obatined. #DA
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery("SELECT"+Snumber1+"FROM STUDENTS"))
+            
+        {
+           String FNAME = rs.getString("FNAME");
+            jTextPane1.setText(FNAME);
+           String LNAME = rs.getString("LNAME");
+           jTextPane2.setText(LNAME);
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();  // for debugging
+            
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

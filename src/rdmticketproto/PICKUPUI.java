@@ -1,15 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//IMPORTANT! READ THIS! The idea here is to take the indexes from each combobox, and add them together for an int value that's placed in the lower box,
+//representing the number of tickets, which can't be more than 6 (or 2, bla bla bla) this number is piped into a foreach counter that generates a ticket number
+//and puts a new row in the database for each one. #DA
 package rdmticketproto;
+
+import java.sql.*;
 
 /**
  *
  * @author Aggros the Wroth
  */
 public class PICKUPUI extends javax.swing.JFrame {
+    private static Connection connection = null;
+    private static int TCounter;
+    private static String ADA;
+    private static String Snumber2 ="";
 
     /**
      * Creates new form PICKUPUI
@@ -57,6 +61,11 @@ public class PICKUPUI extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", " " }));
 
         jButton1.setText("CREATE TICKETS");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jCheckBox2.setText("ADA GUESTS");
 
@@ -153,6 +162,42 @@ public class PICKUPUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        Snumber2 = jTextField1.getText();
+        int Tnumber = 00;
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery("SELECT"+Snumber2+"FROM STUDENTS"))
+        {
+            
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();  // for debugging
+            System.out.println("Student Number not found. Please enter valid student Number.");
+        }
+        //put foreachcounter for TCounter here #DA
+        //Creates a new row for each ticket
+        try(Statement statment = connection.createStatement(
+        ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet rs = statment.executeQuery("SELECT * FROM TICKETS"))
+        {  
+        System.out.println("Insert test: ");
+
+        rs.moveToInsertRow();
+        rs.updateString("TNUM", ""+Snumber2+""+Tnumber+""+ADA+"");
+        rs.updateString("SNUM", ""+Snumber2+"");
+        rs.insertRow();
+        rs.moveToCurrentRow();
+        System.out.println();
+        }
+         catch(SQLException e)
+        {
+            e.printStackTrace();  // for debugging
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
