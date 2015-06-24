@@ -1,8 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//PURPOSE: Sets up all the derby db stuff. DONT TOUCH IT. DONT YOU DARE.
+//TODO: JACK SHIT.
 package rdmticketproto;
 
 import java.sql.*;
@@ -18,11 +15,11 @@ public class TICKETDB {
         Connection connection = null;
         try
         {
-            // if necessary, set the home directory for Derby
-            String dbDirectory = "";
-            System.setProperty("", dbDirectory);
+            // SET HOME DIRECTORY OF DERBY TO THE LOCAL FOLDER
+            String dbDirectory = "C:\\Users\\Aggros the Wroth\\Desktop\\PROTO2\\RDMTIX_2.0";
+            System.setProperty("derby.system.home", dbDirectory);
 
-            // set the db url, username, and password
+            // set the db url, username, and password, IF NECESSARY, put ; create = false at the end
             String url = "jdbc:derby:TICKETDB";
             String username = "metro";
             String password = "roadrunner";

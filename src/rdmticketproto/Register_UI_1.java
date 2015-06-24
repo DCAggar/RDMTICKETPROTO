@@ -1,14 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//This is the initial registration window, where the bulk of the action happens. The user selects the tickets types and venue they need, then the window spits out tickets and congratulates them.
+//TODO: Add logic that caps tickets at 6. Add alerts when the user has left something blank. Add ticket output. Add SQL that adds tickets to DB.
 package rdmticketproto;
 
+import java.sql.*;
 
 /**
  *
  * @author Preston
+ * @collab DCAggar
  */
 public class Register_UI_1 extends javax.swing.JFrame {
 
@@ -216,10 +215,10 @@ public class Register_UI_1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RegistrationBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrationBackButtonActionPerformed
-        // TODO add your handling code here:
+        // TODO change Ticket_menu_1 to the ticket output window. Uncomment afterwards.
         this.dispose();
-        Ticket_menu_1 a = new Ticket_menu_1();
-        a.setVisible(true);
+        //Ticket_menu_1 a = new Ticket_menu_1();
+        //a.setVisible(true);
     }//GEN-LAST:event_RegistrationBackButtonActionPerformed
 
     /**

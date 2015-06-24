@@ -1,20 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//PURPOSE: This is the first screen the users sees, and what the program defaults to when it is finished. From this screen, the user enters credentials, and the system takes them to
+//the appropriate screen from there. The three screens possible after this one are Register_2_1 (renamed to be the 2nd screen for clarity), Extra_Tickets_2_2 (the second possible second
+//screen, and Admin_2. This screen takes the credentials entered and checks them against the database.
+//TODO:Enter SQL Logic, Enter 'next screen' logic.
+
+//@DCA I changed the two text panes in here to text fields. They look similar, but a pane only displays text, doesn't allow entering or using it.
 package rdmticketproto;
+
+import java.sql.*;
 
 /**
  *
  * @author Preston
+ * @collab DCAggar
  */
-public class Confirm_eligibility extends javax.swing.JFrame {
+public class Login_1 extends javax.swing.JFrame {
+    
+    //creates a new DB connect, using TICKETDB.java.
+    private static Connection connection = null;
+    //variables
+    public static String Snumber; //from the first jTextField
+    public static String Sname; //from the second jTextField
+    public static Boolean Registered = false; //for checking if user has registered
+    public static Boolean IsValid = true; //for checking if the user exists
+    
 
     /**
      * Creates new form pickup_UI_1
      */
-    public Confirm_eligibility() {
+    public Login_1() {
         initComponents();
     }
 
@@ -31,10 +44,8 @@ public class Confirm_eligibility extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         ConfirmButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -53,9 +64,9 @@ public class Confirm_eligibility extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setText("Confirm your last name:");
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jTextField1.setText("jTextField1");
 
-        jScrollPane2.setViewportView(jTextPane2);
+        jTextField2.setText("jTextField2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -63,29 +74,28 @@ public class Confirm_eligibility extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(38, 38, 38)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
-                .addGap(84, 84, 84))
+                        .addGap(31, 31, 31)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(59, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(85, 85, 85))
         );
 
@@ -145,16 +155,64 @@ public class Confirm_eligibility extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmButtonActionPerformed
-        // TODO add your handling code here:
+         // @DCA: edited this because the secondary screen is unneccesary.
+        // TODO: Add logic that checks DB and takes user to appropriate screen.
+        
+        
+        Snumber = jTextField1.getText();
+        Sname = jTextField2.getText();
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery("SELECT"+Snumber+","+Sname+"FROM STUDENTS"))
+        {
+            
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();  // for debugging
+            System.out.println("Student not found. Please enter valid student number and name.");
+            //I commented this out for testing. TODO: Uncomment this in final version.
+            //IsValid = false;
+        }
+        if (IsValid == true) //checks if the user is valid in the DB
+        {
+         try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery("SELECT REGISTERED FROM STUDENTS WHERE"+Snumber+"="+Snumber+""))
+        {
+           rs.next();
+            Registered = rs.getBoolean(1);
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();  // for debugging
+            System.out.println("REGISTERED NOT FOUND. SET THINGS ON FIRE.");
+            
+        } 
+        if (Registered == false)
+        {
         this.dispose();
-        Ticket_menu_1 a = new Ticket_menu_1();
+        Register_UI_1 a = new Register_UI_1();
         a.setVisible(true);
+        }
+        //else //supposed to call the secondary 'extra 2 ticket pickup' window
+        //{
+         // this.dispose();
+        //Register_UI_2 b = new Register_UI_2();
+        //b.setVisible(true); 
+        //}
     }//GEN-LAST:event_ConfirmButtonActionPerformed
-
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        connection = TICKETDB.getConnection();
+        
+        
+        
+        if (connection != null)
+            System.out.println("Derby has been started in embed mode. Connection Made.\n");
+        if (connection == null)
+            System.out.println("Derby doesn't seem to be working correctly. Fix it. \n");
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -168,14 +226,18 @@ public class Confirm_eligibility extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Confirm_eligibility.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Confirm_eligibility.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Confirm_eligibility.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Confirm_eligibility.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -184,7 +246,7 @@ public class Confirm_eligibility extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Confirm_eligibility().setVisible(true);
+                new Login_1().setVisible(true);
             }
         });
     }
@@ -197,9 +259,7 @@ public class Confirm_eligibility extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
