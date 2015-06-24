@@ -159,3 +159,6 @@ ERROR XBM0J: Directory C:\Users\Aggros the Wroth\Desktop\PROTO\RDMTIX_2.0\C:\Use
 Cleanup action completed
 Wed Jun 24 14:52:36 MDT 2015 Thread[DRDAConnThread_2,5,main] (DATABASE = TICKETDB), (DRDAID = {1}), Failed to create database 'TICKETDB', see the next exception for details.
 Wed Jun 24 14:52:36 MDT 2015 Thread[DRDAConnThread_2,5,main] (DATABASE = TICKETDB), (DRDAID = {1}), Directory C:\Users\Aggros the Wroth\Desktop\PROTO\RDMTIX_2.0\C:\Users\Aggros the Wroth\Desktop\PROTO\RDMTIX_2.0\TICKETDB already exists.
+----------------------------------------------------------------
+Wed Jun 24 15:15:54 MDT 2015: Shutting down Derby engine
+----------------------------------------------------------------

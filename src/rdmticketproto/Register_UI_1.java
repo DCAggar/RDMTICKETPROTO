@@ -1,5 +1,6 @@
 //This is the initial registration window, where the bulk of the action happens. The user selects the tickets types and venue they need, then the window spits out tickets and congratulates them.
 //TODO: Add logic that caps tickets at 6. Add alerts when the user has left something blank. Add ticket output. Add SQL that adds tickets to DB.
+//TODO: IMPORTANT: Add a textpanel that displays number of tickets. add a combo box for ADA addons (guests that accompany ADA peoples). Add logic that caps ADA addons to one per regular ADA ticket.
 package rdmticketproto;
 
 import java.sql.*;
