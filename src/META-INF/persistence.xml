@@ -23,4 +23,15 @@
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
+  <persistence-unit name="jdbc:derby:TICKETDBPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>rdmticketproto.Tickets</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:TICKETDB;create=true"/>
+      <property name="javax.persistence.jdbc.user" value="metro"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+      <property name="javax.persistence.jdbc.password" value="roadrunner"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
 </persistence>
