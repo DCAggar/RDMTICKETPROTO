@@ -7,6 +7,7 @@
 package rdmticketproto;
 
 import java.sql.*;
+import javax.swing.JFrame;
 
 /**
  *
@@ -31,7 +32,7 @@ public class Login_1 extends javax.swing.JFrame {
         initComponents();
     }
 
-   /************************************************************************************
+   /*************************************************************************************
     Login_1() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }***********************************************************************************
@@ -253,7 +254,10 @@ public class Login_1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login_1().setVisible(true);
+                Login_1 frame = new Login_1();
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
     }
