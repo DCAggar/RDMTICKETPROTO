@@ -4,8 +4,7 @@
 package rdmticketproto;
 
 import java.sql.*;
-import static rdmticketproto.Login_1.Sname;
-import static rdmticketproto.Login_1.Snumber;
+import javax.swing.JFrame;
 
 
 /**
@@ -230,7 +229,7 @@ public class Register_UI_1 extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Continue");
+        jButton3.setText("Print");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -296,8 +295,9 @@ public class Register_UI_1 extends javax.swing.JFrame {
            //TODO put in SQL to generate tickets.
         // TODO change Ticket_menu_1 to the ticket output window. Uncomment afterwards.
         this.dispose();
-        //Ticket_menu_1 a = new Ticket_menu_1();
-        //a.setVisible(true);
+        /*Login_1 a = new Login_1();
+        a.setVisible(true); 
+        a.setLocationRelativeTo(null);*/
        }
     }//GEN-LAST:event_RegistrationBackButtonActionPerformed
 
@@ -383,7 +383,10 @@ public class Register_UI_1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Register_UI_1().setVisible(true);
+                Register_UI_1 frame = new Register_UI_1();
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
     }
