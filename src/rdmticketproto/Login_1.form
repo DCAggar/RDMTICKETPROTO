@@ -3,9 +3,6 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[938, 525]"/>
-    </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[938, 525]"/>
     </Property>
@@ -50,7 +47,7 @@
                       <Component id="ConfirmButton" min="-2" pref="178" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="373" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="HelpButton" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -73,7 +70,7 @@
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Component id="ConfirmButton" min="-2" pref="61" max="-2" attributes="0"/>
               <EmptySpace pref="26" max="32767" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="HelpButton" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -179,7 +176,7 @@
         <Property name="text" type="java.lang.String" value="RDM Ticketing System"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="HelpButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="I need help"/>
       </Properties>

@@ -31,6 +31,12 @@ public class Login_1 extends javax.swing.JFrame {
         initComponents();
     }
 
+   /************************************************************************************
+    Login_1() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }***********************************************************************************
+    ************************************************************************************/
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,10 +54,9 @@ public class Login_1 extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         ConfirmButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        HelpButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(938, 525));
         setMinimumSize(new java.awt.Dimension(938, 525));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rdmticketproto/Metro_State_Roadrunners_00447a_d31243.png"))); // NOI18N
@@ -109,7 +114,7 @@ public class Login_1 extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         jLabel4.setText("RDM Ticketing System");
 
-        jButton1.setText("I need help");
+        HelpButton.setText("I need help");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,7 +136,7 @@ public class Login_1 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(ConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(373, 373, 373))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(HelpButton, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +153,7 @@ public class Login_1 extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(ConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(jButton1))
+                .addComponent(HelpButton))
         );
 
         pack();
@@ -192,12 +197,14 @@ public class Login_1 extends javax.swing.JFrame {
         this.dispose();
         Register_UI_1 a = new Register_UI_1();
         a.setVisible(true);
+        a.setLocationRelativeTo(null);
         }
         //else //supposed to call the secondary 'extra 2 ticket pickup' window
         //{
          // this.dispose();
         //Register_UI_2 b = new Register_UI_2();
         //b.setVisible(true); 
+        //b.setLocationRelativeTo(null);
         //}
     }//GEN-LAST:event_ConfirmButtonActionPerformed
     }
@@ -253,7 +260,7 @@ public class Login_1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ConfirmButton;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton HelpButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
