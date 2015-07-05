@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//TODO: Whip up the ticket output stuff. That is all.
 package rdmticketproto;
 
 /**
@@ -38,9 +34,7 @@ public class PickUp_UI_1 extends javax.swing.JFrame {
         HelpButton.setText("I need help");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(938, 525));
         setMinimumSize(new java.awt.Dimension(938, 525));
-        setPreferredSize(new java.awt.Dimension(938, 525));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
         jLabel5.setText("Print Screen");
@@ -159,6 +153,7 @@ public class PickUp_UI_1 extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(PickUp_UI_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

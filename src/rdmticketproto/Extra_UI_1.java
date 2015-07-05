@@ -1,6 +1,6 @@
-//This is the initial registration window, where the bulk of the action happens. The user selects the tickets types and venue they need, then the window spits out tickets and congratulates them.
-//TODO: Add logic that caps tickets at 6. Add alerts when the user has left something blank. Add ticket output. Add SQL that adds tickets to DB.
-//TODO: IMPORTANT:cap ada addons ticket.
+//This is the extra ticket request window.
+
+
 package rdmticketproto;
 
 import java.sql.*;
@@ -15,14 +15,14 @@ import static rdmticketproto.Login_1.Snumber;
  * @author Preston
  * @collab DCAggar
  */
-public class Register_UI_1 extends javax.swing.JFrame {
+public class Extra_UI_1 extends javax.swing.JFrame {
     
     public static int ADA = 0; //counts ADA type tickets
     public static int REG = 0; //counts regular tickets
     public static int ADD = 0; //counts additional tickets
     public static int TOT = ADA + REG + ADD; //counts ticket total
     public static int ATOT = ADA + ADD; //counts ADA total
-    public static int WAV = 6;
+    
     private int BACK = 0;
     private int RCOUNTER = 0;
     private int ACOUNTER = 0;
@@ -36,7 +36,7 @@ public class Register_UI_1 extends javax.swing.JFrame {
     /**
      * Creates new form menu2
      */
-    public Register_UI_1() {
+    public Extra_UI_1() {
         initComponents();
     }
 
@@ -96,7 +96,6 @@ public class Register_UI_1 extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(938, 525));
         setMinimumSize(new java.awt.Dimension(938, 525));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rdmticketproto/Metro_State_Roadrunners_00447a_d31243.png"))); // NOI18N
@@ -300,7 +299,7 @@ public class Register_UI_1 extends javax.swing.JFrame {
     private void RegistrationBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrationBackButtonActionPerformed
        if (BACK == 0)
        {
-        JOptionPane.showMessageDialog(null, "Clicking back will reset your registration. Click 'BACK' again if you are sure.");
+        JOptionPane.showMessageDialog(null, "Clicking back will cancel your request. Click 'BACK' again if you are sure.");
         BACK = 1;
        }
        else if (BACK == 1)
@@ -354,15 +353,15 @@ public class Register_UI_1 extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         //This is the big one. This is the REGISTER button action.
-        if (TOT > 6)
+        if (TOT > 2)
        {
-           JOptionPane.showMessageDialog(null, "Please limit yourself to only 6 tickets during the initial registration. Thank you.");
+           JOptionPane.showMessageDialog(null, "You may only recieve two extra tickets per request. Thank you.");
        }
-       else if (TOT <= 6 && SURE == 0)
+       else if (TOT <= 2 && SURE == 0)
        {
-           WAV = 6 - TOT;
-           JOptionPane.showMessageDialog(null, "You will be waiving "+WAV+" tickets when you finish registration. Please ensure you have the number of tickets you desire before confirming your selections.");
-           jButton3.setText("Confirm Registration");
+           
+           JOptionPane.showMessageDialog(null, "You will be requesting "+TOT+" extra tickets when you finish. Please ensure you have the number of tickets you desire before confirming your selections.");
+           jButton3.setText("Confirm Request");
            SURE = 1;
        }
        else if (SURE == 1)
@@ -425,30 +424,11 @@ public class Register_UI_1 extends javax.swing.JFrame {
             ACOUNTER ++;
             
         }
-        //This is the SQL that sets REGISTERED to '1' in the STUDENTS table, then logs the time it happened, for extra ticket purposes.
+        
         Connection c = null;
         Statement stmt = null;
-        try 
-        {
-        Class.forName("org.sqlite.JDBC");
-        c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
-        System.out.println("Opened database successfully");
-
-        stmt = c.createStatement();
         
-        String sql = "UPDATE STUDENTS SET REGISTERED = 1 WHERE"+Snumber+"="+Snumber+"";
-                 
-        stmt.executeUpdate(sql);
-        stmt.close();
-        c.close();
-        } 
-        catch ( Exception e ) 
-        {
-      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-      System.exit(0);
-        }
-        //end of SQL 'Registered'
-        //This is the SQL that gets the date (Gregorian Day) and logs it.
+        //This is the SQL that gets and upates the date (Gregorian Day) and logs it.
         try 
         {
         Class.forName("org.sqlite.JDBC");
@@ -509,14 +489,22 @@ public class Register_UI_1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Register_UI_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Extra_UI_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Register_UI_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Extra_UI_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Register_UI_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Extra_UI_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Register_UI_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Extra_UI_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -529,7 +517,7 @@ public class Register_UI_1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Register_UI_1().setVisible(true);
+                new Extra_UI_1().setVisible(true);
             }
         });
     }

@@ -1,13 +1,14 @@
 //PURPOSE: This is the first screen the users sees, and what the program defaults to when it is finished. From this screen, the user enters credentials, and the system takes them to
 //the appropriate screen from there. The three screens possible after this one are Register_2_1 (renamed to be the 2nd screen for clarity), Extra_Tickets_2_2 (the second possible second
 //screen, and Admin_2. This screen takes the credentials entered and checks them against the database.
-//TODO:Enter SQL Logic, Enter 'next screen' logic.
+//TODO: Enter 'next screen' logic.
 
 //@DCA I changed the two text panes in here to text fields. They look similar, but a pane only displays text, doesn't allow entering or using it.
 package rdmticketproto;
 
 import java.sql.*;
-import javax.swing.JFrame;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,8 +22,9 @@ public class Login_1 extends javax.swing.JFrame {
     //variables
     public static String Snumber; //from the first jTextField
     public static String Sname; //from the second jTextField
-    public static Boolean Registered = false; //for checking if user has registered
+    public static int Registered = 0; //for checking if user has registered
     public static Boolean IsValid = true; //for checking if the user exists
+    public static int Greg2;
     
 
     /**
@@ -31,12 +33,6 @@ public class Login_1 extends javax.swing.JFrame {
     public Login_1() {
         initComponents();
     }
-
-   /*************************************************************************************
-    Login_1() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }***********************************************************************************
-    ************************************************************************************/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,9 +51,10 @@ public class Login_1 extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         ConfirmButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        HelpButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(938, 525));
         setMinimumSize(new java.awt.Dimension(938, 525));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rdmticketproto/Metro_State_Roadrunners_00447a_d31243.png"))); // NOI18N
@@ -115,7 +112,7 @@ public class Login_1 extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         jLabel4.setText("RDM Ticketing System");
 
-        HelpButton.setText("I need help");
+        jButton1.setText("I need help");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,7 +134,7 @@ public class Login_1 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(ConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(373, 373, 373))
-                    .addComponent(HelpButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +151,7 @@ public class Login_1 extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(ConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(HelpButton))
+                .addComponent(jButton1))
         );
 
         pack();
@@ -162,53 +159,115 @@ public class Login_1 extends javax.swing.JFrame {
 
     private void ConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmButtonActionPerformed
          // @DCA: edited this because the secondary screen is unneccesary.
-        // TODO: Add logic that checks DB and takes user to appropriate screen.
+        // TODO: Uncomment the extra logic blocks
         
-        
+        /* //THIS STAR THING COMMENTS THE FUCK OUT OF THE STUFF BELOW.
         Snumber = jTextField1.getText();
         Sname = jTextField2.getText();
-        try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery("SELECT"+Snumber+","+Sname+"FROM STUDENTS"))
+        //begin student finding SQL block 
+        Connection c = null;
+        Statement stmt = null;
+        try 
         {
-            
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();  // for debugging
-            System.out.println("Student not found. Please enter valid student number and name.");
-            //I commented this out for testing. TODO: Uncomment this in final version.
-            //IsValid = false;
-        }
-        if (IsValid == true) //checks if the user is valid in the DB
-        {
-         try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery("SELECT REGISTERED FROM STUDENTS WHERE"+Snumber+"="+Snumber+""))
-        {
-           rs.next();
-            Registered = rs.getBoolean(1);
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();  // for debugging
-            System.out.println("REGISTERED NOT FOUND. SET THINGS ON FIRE.");
-            
+        Class.forName("org.sqlite.JDBC");
+        c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
+        System.out.println("Opened database successfully");
+        
+        stmt = c.createStatement();
+        
+        String sql = "SELECT SID FROM STUDENTS WHERE SID = "+Snumber+"" ;
+                  
+                   
+                   
+        stmt.executeUpdate(sql);
+        stmt.close();
+        c.close();
         } 
-        if (Registered == false)
+        catch ( Exception e ) 
         {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      JOptionPane.showMessageDialog(null, "Student not found, please try again.");
+        }
+        //End of student finding SQL block
+        //Begin of registeration status block
+        try 
+        {
+        Class.forName("org.sqlite.JDBC");
+        c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
+        System.out.println("Opened database successfully");
+        
+        stmt = c.createStatement();
+        
+        String sql = "SELECT REGISTERED FROM STUDENTS WHERE SID = "+Snumber+"" ;
+         
+        
+                   
+                   
+        Registered = stmt.executeUpdate(sql);
+        stmt.close();
+        c.close();
+        } 
+        catch ( Exception e ) 
+        {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      JOptionPane.showMessageDialog(null, "Student status not found, please try again.");
+        }
+        //End student registration block
+        
+        
+        */
+        if (Registered == 0)
+        {
+        
         this.dispose();
         Register_UI_1 a = new Register_UI_1();
         a.setVisible(true);
-        a.setLocationRelativeTo(null);
         }
-        //else //supposed to call the secondary 'extra 2 ticket pickup' window
-        //{
-         // this.dispose();
-        //Register_UI_2 b = new Register_UI_2();
-        //b.setVisible(true); 
-        //b.setLocationRelativeTo(null);
-        //}
+        /*
+        else //supposed to call the secondary 'extra 2 ticket pickup' window
+        {
+            //these 2 lines fetch the Greg date
+            Calendar rightNow = Calendar.getInstance();
+            int Greg = rightNow.get(Calendar.DAY_OF_YEAR); 
+            //these lines fetch the date the SID registered (stored as a Greg int)
+           
+        try 
+        {
+        Class.forName("org.sqlite.JDBC");
+        c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
+        System.out.println("Opened database successfully");
+
+        stmt = c.createStatement();
+        
+        String sql = "SELECT TIME FROM STUDENTS WHERE"+Snumber+"="+Snumber+"";
+                 
+        Greg2 = stmt.executeUpdate(sql); //THIS INITIALIZES THE COMPARE VAR, Greg2, and pushes the select statement into it.
+        stmt.close();
+        c.close();
+        } 
+        catch ( Exception e ) 
+        {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+        }
+        //SQL end
+        if (Greg2 - Greg > 0)
+        {
+            JOptionPane.showMessageDialog(null, "You are eligible for extra tickets at this time. Please complete the request.");
+         this.dispose();
+        Extra_UI_1 b = new Extra_UI_1();
+        b.setVisible(true); 
+        }
+        else 
+        {
+            JOptionPane.showMessageDialog(null, "You are not eligible for extra tickets at this time. Please try again later. Thank you.");
+            jTextField1.setText("");
+            jTextField2.setText("");
+        }
+        }
+        */ //END OF COMMENTED SECTION.
     }//GEN-LAST:event_ConfirmButtonActionPerformed
-    }
+    
     /**
      * @param args the command line arguments
      */
@@ -218,9 +277,8 @@ public class Login_1 extends javax.swing.JFrame {
         
         
         if (connection != null)
-            System.out.println("Derby has been started in embed mode. Connection Made.\n");
-        if (connection == null)
-            System.out.println("Derby doesn't seem to be working correctly. Fix it. \n");
+            System.out.println("SQLite has been started in embed mode. Connection Made.\n");
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -254,17 +312,14 @@ public class Login_1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Login_1 frame = new Login_1();
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                new Login_1().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ConfirmButton;
-    private javax.swing.JButton HelpButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
