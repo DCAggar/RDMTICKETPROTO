@@ -125,7 +125,10 @@ public class PickUp_UI_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_ExitButtonActionPerformed
 
     private void PrintTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintTicketButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        Ticket_Out a = new Ticket_Out();
+        a.setVisible(true);
+        a.setLocationRelativeTo(null);
     }//GEN-LAST:event_PrintTicketButtonActionPerformed
 
     /**

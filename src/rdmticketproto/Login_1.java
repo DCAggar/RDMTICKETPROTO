@@ -20,7 +20,7 @@ public class Login_1 extends javax.swing.JFrame {
     //creates a new DB connect, using TICKETDB.java.
     private static Connection connection = null;
     //variables
-    public static String Snumber; //from the first jTextField
+    public static int Snumber; //from the first jTextField
     public static String Sname; //from the second jTextField
     public static int Registered = 0; //for checking if user has registered
     public static Boolean IsValid = true; //for checking if the user exists
@@ -159,10 +159,8 @@ public class Login_1 extends javax.swing.JFrame {
 
     private void ConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmButtonActionPerformed
          // @DCA: edited this because the secondary screen is unneccesary.
-        // TODO: Uncomment the extra logic blocks
-        
-        /* //THIS STAR THING COMMENTS THE FUCK OUT OF THE STUFF BELOW.
-        Snumber = jTextField1.getText();
+        // TODO: Add logic for name check
+        Snumber = Integer.parseInt(jTextField1.getText());
         Sname = jTextField2.getText();
         //begin student finding SQL block 
         Connection c = null;
@@ -171,77 +169,98 @@ public class Login_1 extends javax.swing.JFrame {
         {
         Class.forName("org.sqlite.JDBC");
         c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
-        System.out.println("Opened database successfully");
+        System.out.println("Opened database successfully, checking SID...");
         
         stmt = c.createStatement();
         
-        String sql = "SELECT SID FROM STUDENTS WHERE SID = "+Snumber+"" ;
+        String sql = ("SELECT SID FROM STUDENTS WHERE SID = "+Snumber+"");
+        System.out.println(""+sql+"");
                   
                    
                    
-        stmt.executeUpdate(sql);
+        ResultSet rs = stmt.executeQuery("SELECT SID FROM STUDENTS WHERE SID = "+Snumber+"");
+        if (!rs.isBeforeFirst()) 
+        {    
+        System.out.println("No match found");
+        JOptionPane.showMessageDialog(null, "Student SID not found, please try again.");
+        IsValid = false;
+        rs.close();
+        }
         stmt.close();
         c.close();
         } 
         catch ( Exception e ) 
         {
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-      JOptionPane.showMessageDialog(null, "Student not found, please try again.");
         }
         //End of student finding SQL block
-        //Begin of registeration status block
+        //Begin of registration status block
+        
         try 
         {
         Class.forName("org.sqlite.JDBC");
         c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
-        System.out.println("Opened database successfully");
+        System.out.println("Opened database successfully, checking REGISTERED from STUDENTS...");
         
         stmt = c.createStatement();
         
-        String sql = "SELECT REGISTERED FROM STUDENTS WHERE SID = "+Snumber+"" ;
-         
+        String sql = ("SELECT REGISTERED FROM STUDENTS WHERE SID = "+Snumber+";");
+        System.out.println(""+sql+"");
         
-                   
-                   
-        Registered = stmt.executeUpdate(sql);
+        ResultSet rs = stmt.executeQuery("SELECT REGISTERED FROM STUDENTS WHERE SID = "+Snumber+"");
+        System.out.println(""+Registered+"");
+        Registered = rs.getInt("REGISTERED");
+        System.out.println(""+Registered+"");
+        System.out.println("Registration status found.");
+        rs.close();
         stmt.close();
         c.close();
         } 
         catch ( Exception e ) 
         {
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-      JOptionPane.showMessageDialog(null, "Student status not found, please try again.");
         }
         //End student registration block
         
         
-        */
-        if (Registered == 0)
-        {
         
+        if (Registered == 0 && IsValid == true)
+        {
+        JOptionPane.showMessageDialog(null, "Welcome! Please complete initial registration.");
         this.dispose();
         Register_UI_1 a = new Register_UI_1();
         a.setVisible(true);
+        a.setLocationRelativeTo(null);
         }
-        /*
-        else //supposed to call the secondary 'extra 2 ticket pickup' window
+        
+        //Sets isvalid back to true for further checks.
+        if (IsValid == false)
+        {
+            IsValid = true;
+        }
+        
+        if (Registered == 1) //supposed to call the secondary 'extra 2 ticket pickup' window
         {
             //these 2 lines fetch the Greg date
             Calendar rightNow = Calendar.getInstance();
             int Greg = rightNow.get(Calendar.DAY_OF_YEAR); 
+            System.out.println("Current greg date is: "+Greg+"");
             //these lines fetch the date the SID registered (stored as a Greg int)
            
         try 
         {
         Class.forName("org.sqlite.JDBC");
         c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
-        System.out.println("Opened database successfully");
+        System.out.println("Opened database successfully, checking TIME from STUDENTS...");
 
         stmt = c.createStatement();
         
-        String sql = "SELECT TIME FROM STUDENTS WHERE"+Snumber+"="+Snumber+"";
-                 
-        Greg2 = stmt.executeUpdate(sql); //THIS INITIALIZES THE COMPARE VAR, Greg2, and pushes the select statement into it.
+        
+        ResultSet rs = stmt.executeQuery("SELECT TIME FROM STUDENTS WHERE SID = "+Snumber+"");         
+        Greg2 = rs.getInt("TIME"); //THIS INITIALIZES THE COMPARE VAR, Greg2, and pushes the select statement into it.
+        System.out.println("Greg2 is: " +Greg2+"");
+        
+        rs.close();
         stmt.close();
         c.close();
         } 
@@ -251,21 +270,26 @@ public class Login_1 extends javax.swing.JFrame {
       System.exit(0);
         }
         //SQL end
-        if (Greg2 - Greg > 0)
+        if (Greg - Greg2 > 0)
         {
             JOptionPane.showMessageDialog(null, "You are eligible for extra tickets at this time. Please complete the request.");
          this.dispose();
         Extra_UI_1 b = new Extra_UI_1();
         b.setVisible(true); 
+        b.setLocationRelativeTo(null);
         }
         else 
         {
-            JOptionPane.showMessageDialog(null, "You are not eligible for extra tickets at this time. Please try again later. Thank you.");
+            JOptionPane.showMessageDialog(null, "You are not eligible for extra tickets at this time. Here is a printout of your current tickets.");
             jTextField1.setText("");
             jTextField2.setText("");
+            this.dispose();
+        PickUp_UI_1 a = new PickUp_UI_1();
+        a.setVisible(true);
+        a.setLocationRelativeTo(null);
         }
         }
-        */ //END OF COMMENTED SECTION.
+        
     }//GEN-LAST:event_ConfirmButtonActionPerformed
     
     /**

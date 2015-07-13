@@ -163,7 +163,10 @@ public class Admin_UI_1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ValidateTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValidateTicketButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        Validation_UI a = new Validation_UI();
+        a.setVisible(true);
+        a.setLocationRelativeTo(null);
     }//GEN-LAST:event_ValidateTicketButtonActionPerformed
 
     private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed

@@ -16,6 +16,9 @@ import static rdmticketproto.Login_1.Snumber;
  * @collab DCAggar
  */
 public class Extra_UI_1 extends javax.swing.JFrame {
+    //create and get gregorian date int
+    Calendar rightNow = Calendar.getInstance();
+        int day = rightNow.get(Calendar.DAY_OF_YEAR);
     
     public static int ADA = 0; //counts ADA type tickets
     public static int REG = 0; //counts regular tickets
@@ -26,7 +29,7 @@ public class Extra_UI_1 extends javax.swing.JFrame {
     private int BACK = 0;
     private int RCOUNTER = 0;
     private int ACOUNTER = 0;
-    private int TIXINT = 100000; //TODO figure out ticket counting
+    private int TIXINT = 100; 
     private String TIXID = Integer.toString(TIXINT); //String is generated from TIXINT
     private int SURE = 0;
     
@@ -150,7 +153,7 @@ public class Extra_UI_1 extends javax.swing.JFrame {
         );
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
-        jLabel5.setText("Registration");
+        jLabel5.setText("Extra Ticket Request");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -256,12 +259,11 @@ public class Extra_UI_1 extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(181, 181, 181))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(53, 53, 53)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(203, 203, 203)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -307,7 +309,8 @@ public class Extra_UI_1 extends javax.swing.JFrame {
            BACK = 0;
            this.dispose();
         Login_1 a = new Login_1();
-        a.setVisible(true);  
+        a.setVisible(true);
+        a.setLocationRelativeTo(null);
        }
     }//GEN-LAST:event_RegistrationBackButtonActionPerformed
 
@@ -318,6 +321,8 @@ public class Extra_UI_1 extends javax.swing.JFrame {
         System.out.println(""+ADA+"");
         System.out.println(""+TOT+"");
         jTextPane1.setText(Integer.toString(TOT));
+        RCOUNTER = REG;
+        ACOUNTER = ADA + ADD;
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
@@ -327,6 +332,8 @@ public class Extra_UI_1 extends javax.swing.JFrame {
         System.out.println(""+REG+"");
         System.out.println(""+TOT+"");
         jTextPane1.setText(Integer.toString(TOT));
+        RCOUNTER = REG;
+        ACOUNTER = ADA + ADD;
     }//GEN-LAST:event_jComboBox4ActionPerformed
 
     private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
@@ -341,6 +348,8 @@ public class Extra_UI_1 extends javax.swing.JFrame {
         System.out.println(""+ADD+"");
         System.out.println(""+TOT+"");
         jTextPane1.setText(Integer.toString(TOT));
+        RCOUNTER = REG;
+        ACOUNTER = ADA + ADD;
     }//GEN-LAST:event_jComboBox5ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -367,7 +376,7 @@ public class Extra_UI_1 extends javax.swing.JFrame {
        else if (SURE == 1)
        {
            //This while loop generates normal tickets.
-        while (RCOUNTER <= REG)
+        while (RCOUNTER > 0)
         {
         Connection c = null;
         Statement stmt = null;
@@ -375,12 +384,18 @@ public class Extra_UI_1 extends javax.swing.JFrame {
         {
         Class.forName("org.sqlite.JDBC");
         c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
-        System.out.println("Opened database successfully");
+        System.out.println("Opened database successfully, updating TICKETS table, Normal loop...");
         
         stmt = c.createStatement();
-        System.out.println(""+Snumber+"T"+TIXID+"N ,") ;
-        String sql = "INSERT INTO TICKETS VALUES ("+Snumber+"T"+TIXID+"N ,"+Snumber+",0)" ;
-        TIXINT ++;           
+        System.out.println(""+Snumber+"ET"+TIXID+"N"+day+"") ;
+        String TNUM = ""+Snumber+"ET"+TIXID+"N"+day+"";
+        System.out.println("INSERT INTO TICKETS VALUES(\'"+TNUM+"\',"+Snumber+",0)");
+        String sql = ("INSERT INTO TICKETS VALUES(\'"+TNUM+"\',"+Snumber+",0)");
+        System.out.println(""+TIXID+"");
+        TIXINT ++;
+        TIXID = Integer.toString(TIXINT);
+        System.out.println(""+TIXID+"");
+        
                    
                    
         stmt.executeUpdate(sql);
@@ -390,13 +405,13 @@ public class Extra_UI_1 extends javax.swing.JFrame {
         catch ( Exception e ) 
         {
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-      System.exit(0);
+      
         }
-            RCOUNTER ++;
+            RCOUNTER --;
             
         }
         //This while loop generates ADA tickets
-        while (ACOUNTER <= ATOT)
+        while (ACOUNTER > 0)
         {
         Connection c = null;
         Statement stmt = null;
@@ -404,12 +419,16 @@ public class Extra_UI_1 extends javax.swing.JFrame {
         {
         Class.forName("org.sqlite.JDBC");
         c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
-        System.out.println("Opened database successfully");
+        System.out.println("Opened database successfully, updating TICKETS table, ADA loop...");
         
         stmt = c.createStatement();
-        System.out.println(""+Snumber+"T"+TIXID+"A ,") ;
-        String sql = "INSERT INTO TICKETS VALUES ("+Snumber+"T"+TIXID+"A ,"+Snumber+",0)" ;
-        TIXINT++;           
+        System.out.println(""+Snumber+"ET"+TIXID+"A"+day+"") ;
+        String TNUM = ""+Snumber+"ET"+TIXID+"A"+day+"";
+        String sql = "INSERT INTO TICKETS VALUES(\'"+TNUM+"\',"+Snumber+",0)" ;
+        System.out.println(""+TIXID+"");
+        TIXINT ++;
+        TIXID = Integer.toString(TIXINT);
+        System.out.println(""+TIXID+"");         
                    
                    
         stmt.executeUpdate(sql);
@@ -419,26 +438,25 @@ public class Extra_UI_1 extends javax.swing.JFrame {
         catch ( Exception e ) 
         {
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-      System.exit(0);
+      
         }
-            ACOUNTER ++;
+            ACOUNTER --;
             
         }
         
         Connection c = null;
         Statement stmt = null;
         
-        //This is the SQL that gets and upates the date (Gregorian Day) and logs it.
+        //This is the SQL that gets the date (Gregorian Day) and logs it.
         try 
         {
         Class.forName("org.sqlite.JDBC");
         c = DriverManager.getConnection("jdbc:sqlite:TICKETDB.db");
-        System.out.println("Opened database successfully");
+        System.out.println("Opened database successfully, updating TIME on STUDENT table...");
 
         stmt = c.createStatement();
-        Calendar rightNow = Calendar.getInstance();
-        int day = rightNow.get(Calendar.DAY_OF_YEAR);
-        String sql = "UPDATE STUDENTS SET TIME = "+day+" WHERE"+Snumber+"="+Snumber+"";
+        
+        String sql = ("UPDATE STUDENTS SET TIME = "+day+" WHERE SID ="+Snumber+"");
                    
                    
                    
@@ -449,13 +467,14 @@ public class Extra_UI_1 extends javax.swing.JFrame {
         catch ( Exception e ) 
         {
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-      System.exit(0);
+      
         }
         //End of SQL 'datelog'
        
         this.dispose();
         PickUp_UI_1 a = new PickUp_UI_1();
         a.setVisible(true);
+        a.setLocationRelativeTo(null);
         }
 
 
